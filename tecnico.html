@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Tecnico</title>
+   </head>
+   <script src="http://localhost:4000/socket.io/socket.io.js">
+  </script>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+
+   
+   <script>
+     var id = Math.floor(Math.random() * 100);
+     const idTecnico= "tecnico"+id;
+      const socket = io("http://localhost:4000");
+
+  
+      socket.send({"identificazione" : "tecnico","tipo": "registrazione","idTecnico": idTecnico});
+  // handle the event sent with socket.send()
+  socket.on("message", (data) => {
+    console.log(data);
+  });
+
+ 
+    const peer = new Peer(idTecnico, {
+      host: 'localhost',
+      port: 9000,
+      path: '/myapp'
+    });
+
+
+    peer.on('open', function(id) {
+		console.log('My peer ID is: ' + id);
+	});
+	
+	function connect(peerID){
+		var conn = peer.connect(peerID);
+		conn.on('open', function() {
+			// Receive messages
+			conn.on('data', function(data) {
+				console.log('Received', data);
+			});
+			
+			// Send messages
+			conn.send('Hello from phone!');
+		});		
+	}
+
+   </script>
+   <body>Sono il tecnico</body>
+</html>
