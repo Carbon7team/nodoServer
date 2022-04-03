@@ -32,6 +32,10 @@ app.get('/', function(req, res) {
   res.sendfile('testWS.html');
 });
 
+app.get('/videocall', function(req, res) {
+  res.sendfile('videocall.html');
+});
+
 app.get('/tecnico', function(req, res) {
   res.sendfile('tecnico.html');
 });
