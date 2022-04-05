@@ -9,8 +9,8 @@
 <body>
 
   <div id="menu">
-    <p>Your ID:</p>
-    <p id="uuid">123456</p>
+    <p>Your ID VirtualDisplay:</p>
+    <p id="uuid"></p>
     <input type="text" placeholder="Peer id" />
     <button onclick="callUser()">Connect</button>
   </div>
@@ -34,6 +34,37 @@ var currentCall;
 peer.on("open", function (id) {
   document.getElementById("uuid").textContent = id;
 });
+
+
+
+peer.on('connection', function(peerjsConnection) {
+		peerjsConnection.on('open', async function() {
+			// Receive messages
+     
+     
+      setInterval(function () {sendData(peerjsConnection);}, 2000);
+
+
+    
+     
+     
+
+			peerjsConnection.on('data', function(data) {
+				console.log('Received', data);
+			});
+
+      peerjsConnection.on('disconnected', function() {
+			//	clearInterval(interval);
+			});
+			
+			// Send messages
+			//peerjsConnection.send('Hello from VirtualDisplay !!!');
+
+
+
+
+		});
+	});
 
 peer.on("call", (call) => {
  // if (!confirm(`Accept call from ${call.peer}?`)) {
@@ -66,40 +97,6 @@ peer.on("call", (call) => {
   }*/
 });
 
-async function callUser() {
-    // get the id entered by the user
-    const peerId = document.querySelector("input").value;
-  // grab the camera and mic
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true,
-    });
-  // switch to the video call and play the camera preview
-    document.getElementById("menu").style.display = "none";
-    document.getElementById("live").style.display = "block";
-    document.getElementById("local-video").srcObject = stream;
-    document.getElementById("local-video").play();
-  // make the call
-    const call = peer.call(peerId, stream);
-    call.on("stream", (stream) => {
-      document.getElementById("remote-video").srcObject = stream;
-      document.getElementById("remote-video").play();
-    });
-    call.on("data", (stream) => {
-      document.querySelector("#remote-video").srcObject = stream;
-    });
-    call.on("error", (err) => {
-      console.log(err);
-    });
-    call.on('close', () => {
-      endCall()
-    })
-  // save the close function
-    currentCall = call;
-  }
-
-
- 
 
 
   function endCall() {
@@ -114,6 +111,15 @@ async function callUser() {
     } catch {}
     currentCall = undefined;
   }
+
+
+
+
+  function sendData(peerjsConnection,i){
+  peerjsConnection.send({"identificazione" : [ 1, 2],"tipo": "chiamata","idvirtualDisplay": id});
+  console.log("dati inviati");
+
+ }
 </script>
   </body>
 </html>
