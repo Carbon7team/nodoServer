@@ -1,20 +1,34 @@
 {
-  "name": "poc_nodo_server",
+  "name": "nodo-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js",
+    "server": "nodemon app.js",
+    "dev": "npm run server"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.1",
-    "express": "^4.17.2",
-    "http": "0.0.1-security",
-    "knex": "^1.0.4",
+    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "custom-id": "^1.2.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.23.0",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "nodemailer": "^6.4.16",
+    "nodemon": "^2.0.4",
     "peer": "^0.6.1",
-    "pg": "^8.7.3",
-    "socket.io": "^4.4.0"
+    "pg": "^8.2.1",
+    "sequelize": "^5.21.12",
+    "sequelize-cli": "^5.5.1",
+    "socket.io": "^4.5.0",
+    "swagger-jsdoc": "^4.0.0",
+    "swagger-ui-express": "^4.1.4"
   }
 }
