@@ -112,9 +112,9 @@ peerServer.on('connection', function (id) {
 
 
 
-http.listen(4000, function() {
-  console.log('listening on *:4000');
-});
+  http.listen(4000, function() {
+    console.log('listening on *:4000');
+  });
 
 
 
