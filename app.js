@@ -6,6 +6,8 @@ const helmet = require('helmet');
 const logger = require('morgan');
 const { ExpressPeerServer } = require('peer');
 const manageSocketUser = require('./middlewares/manageSoketUser');
+const manageCall = require('./middlewares/manageCall');
+
 
 const app = express();
 
@@ -85,7 +87,7 @@ const login = require('./routes/loginUser');
 const register = require('./routes/registerUser');
 const logout=require('./routes/logout')
 const deleteUser = require('./routes/deleteUser');
-
+const updateDisponibility = require('./routes/changeDisponibility')
 
 
 const server = app.listen(port);
@@ -104,6 +106,7 @@ app.use(login);
 app.use(register);
 app.use(logout);
 app.use(deleteUser);
+app.use(updateDisponibility);
 
 
 
@@ -135,11 +138,20 @@ io.on('connection', function(socket) {
   });
 
   // Receipt of messages through the socket and identification of the request
-  socket.on("message", (data) => {
+  socket.on("message", async (data) => {
  
-      if(data.tipo == "registrazione"){
+      if(data.type == "registration"){
         manageSocketUser.saveSocketUser(data,socket.id);
-      
+      }
+
+      if(data.type == "call"){
+        var user = await manageSocketUser.findSocketUser(socket.id);
+        if(user.User.role == "user") manageCall.sendCallToTechnician(user,socket);
+        
+      }
+
+      if(data.type == "refuse"){
+        manageCall.resendCallToTechnician(user,socket.id,socket);
       }
     
     /*
@@ -176,3 +188,5 @@ function getTecnicoDisponibile(){
   });
 return tecnicoDisponibile;
 }
+
+

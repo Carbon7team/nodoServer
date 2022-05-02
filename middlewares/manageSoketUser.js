@@ -2,7 +2,7 @@
 const {UserOnline,User}= require('../sequelize');
 
 
-async function saveSocketUser(data,soketId) {
+async function saveSocketUser(data,socketId) {
 
     User.findOne({ where: {id: data.idUser } })
     .then(async (found) => {
@@ -11,7 +11,7 @@ async function saveSocketUser(data,soketId) {
         const userOnline = await UserOnline.create({
             user_id:found.id,
             disponibility:true,
-            id_socket: soketId,
+            id_socket: socketId,
           });
           if(userOnline) console.log("userOnline created")
           
@@ -28,5 +28,15 @@ async function removeSocketUser(socketId) {
 
 }
 
+async function findSocketUser(socketId) {
+    
+  return await UserOnline.findOne({include: [{
+    model: User,
+    required: true
+   }],
+    where: {id_socket: socketId } });
 
-module.exports = {saveSocketUser,removeSocketUser}
+}
+
+
+module.exports = {saveSocketUser,removeSocketUser,findSocketUser}

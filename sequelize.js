@@ -28,6 +28,11 @@ const UserLogin = UserLoginModel(sequelize, Sequelize);
 const BlacklistToken = BlacklistTokenModel(sequelize, Sequelize);
 const UserOnline = UserOnlineModel(sequelize, Sequelize);
 
+
+
+User.hasMany(UserOnline, { foreignKey: 'user_id' });
+UserOnline.belongsTo(User, { foreignKey: 'user_id' });
+
 /*
 db.tutorials.hasMany(db.comments, { as: "comments" });
 

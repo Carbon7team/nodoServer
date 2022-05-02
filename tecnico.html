@@ -10,11 +10,11 @@
    
    <script>
      var id = Math.floor(Math.random() * 100);
-     const idTecnico= "845fae0d-a12f-4f5a-a2c3-99c560a849a8";
+     const idTecnico= "8c3db2bc-62e8-4549-92f3-393ae67ba7a7";
       const socket = io("http://localhost:4000");
 
   
-      socket.send({"identificazione" : "tecnico","tipo": "registrazione","idUser": idTecnico});
+      socket.send({"tipo": "registration","idUser": idTecnico});
   // handle the event sent with socket.send()
   socket.on("message", (data) => {
     console.log(data);
