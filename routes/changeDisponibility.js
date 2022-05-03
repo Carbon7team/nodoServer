@@ -43,7 +43,7 @@ const router = require("express").Router();
 
 router.post('/changeDisponibility', async (req, res, next) => {
   //check if the username does not exist
-
+  console.log(JSON.stringify(req.body));
   UserOnline.update(
     {
       disponibility: req.body.disponibility,
@@ -52,7 +52,8 @@ router.post('/changeDisponibility', async (req, res, next) => {
       where: { user_id : req.body.user_id },
     }
   ) .then((userOnlineUpdated) => {
-    if (userOnlineUpdated === 1) {
+    console.log(userOnlineUpdated);
+    if (userOnlineUpdated ==  1) {
       console.log('disponibility is updated');
       res.status(200).send('disponibility is updated');
     } else {

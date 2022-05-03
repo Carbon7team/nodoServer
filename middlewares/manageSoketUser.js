@@ -3,7 +3,7 @@ const {UserOnline,User}= require('../sequelize');
 
 
 async function saveSocketUser(data,socketId) {
-
+    console.log(data);
     User.findOne({ where: {id: data.idUser } })
     .then(async (found) => {
 

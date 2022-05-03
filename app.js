@@ -145,12 +145,13 @@ io.on('connection', function(socket) {
       }
 
       if(data.type == "call"){
-        var user = await manageSocketUser.findSocketUser(socket.id);
-        if(user.User.role == "user") manageCall.sendCallToTechnician(user,socket);
+        var userOnline = await manageSocketUser.findSocketUser(socket.id);
+        if(userOnline.User.role == "user") manageCall.sendCallToTechnician(userOnline,socket);
         
       }
 
       if(data.type == "refuse"){
+        // id utente virtual display
         manageCall.resendCallToTechnician(user,socket.id,socket);
       }
     
