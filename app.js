@@ -151,24 +151,11 @@ io.on('connection', function(socket) {
       }
 
       if(data.type == "refuse"){
-        // id utente virtual display
-        manageCall.resendCallToTechnician(user,socket.id,socket);
+        var userOnline = await manageSocketUser.findSocketUser(data.type.user_id);
+        manageCall.resendCallToTechnician(userOnline,socket.id,socket);
       }
     
-    /*
-    if(data.identificazione == "virtualDisplay"){
-      if(data.tipo == "chiamata"){
-        addVirtualDisplay(socket.id,data.idVirtualDisplay);
-        var tecnicoDisponibile = getTecnicoDisponibile();
-        if(tecnicoDisponibile != null) {
-          socket.broadcast.to(tecnicoDisponibile).emit('message', data );
-        } 
-      }
-    }*/
 
-
-   
-   socket.send("ho ricevuto il tuo codice");
  });
 });
 

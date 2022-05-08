@@ -7,8 +7,9 @@ async function sendCallToTechnician(userCall,socket) {
     UserOnline.findOne({include: [{
         model: User,
         required: true,
-        
-       }], where: {disponibility: true , User:{User:{role: "technician"}}} })
+        where: {role: "technician"}
+
+       }], where: {disponibility: true} })
     .then(async (found) => {
 
         console.log(found);
@@ -31,8 +32,9 @@ async function resendCallToTechnician(userCall,oldTechnicianSocket,socket) {
 
     UserOnline.findOne({include: [{
         model: User,
-        required: true
-       }], where: {disponibility: true , role: "technician", id_socket: { $not: oldTechnicianSocket}}  })
+        required: true,
+        where: {role: "technician"}
+       }], where: {disponibility: true , id_socket: { $not: oldTechnicianSocket}}  })
     .then(async (found) => {
         if(found ===1){
             socket.broadcast.to(found.id_socket).emit('message', {
