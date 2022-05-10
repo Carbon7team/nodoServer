@@ -122,8 +122,6 @@ peerServer.on('connection', function (id) {
 });
 
 
-
-
 // Socket initialization for user management
 io.on('connection', function(socket) {
   console.log('A user connected');
@@ -158,23 +156,3 @@ io.on('connection', function(socket) {
 
  });
 });
-
-
-
-
-
-
-
-//the function returns to the first available usersnician
-function getTecnicoDisponibile(){
-  var tecnicoDisponibile ;
-  users.forEach(tecnico => {
-    if(tecnico.disponibilita) {
-      if(tecnicoDisponibile == null)  tecnicoDisponibile = tecnico.idSocket;
-
-    }
-  });
-return tecnicoDisponibile;
-}
-
-

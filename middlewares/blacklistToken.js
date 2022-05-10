@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const {Blacklist,UserLogin}= require('../sequelize');
+const {BlacklistToken,UserLogin}= require('../sequelize');
 
 
 function blacklistToken(req, res, next) {
@@ -12,7 +12,7 @@ function blacklistToken(req, res, next) {
     return res.sendStatus(401);
 
 
-  Blacklist.findOne({ where: {token: token } })
+    BlacklistToken.findOne({ where: {token: token } })
     .then((found) => {
 
       if (found){
@@ -39,7 +39,7 @@ function blacklistToken(req, res, next) {
             if(login.token_deleted==true){
               login.logged_out=true;
               await login.save()
-              const blacklist_token = Blacklist.create({
+              const blacklist_token = BlacklistToken.create({
                 token:token
               });
             }
@@ -47,7 +47,7 @@ function blacklistToken(req, res, next) {
               login.logged_out=true;
               login.token_deleted=true;
               await login.save();
-              const blacklist_token = Blacklist.create({
+              const blacklist_token = BlacklistToken.create({
                 token:token
               });
             }
