@@ -43,7 +43,8 @@ var { generateToken, sendToken } = require('../utils/token.utils');
 
 router.post('/loginUser', async (req, res, next) => {
   //check if the username does not exist
-  const userexists = await User.findOne({ where: {username: req.body.username, role: "technician"} });
+  const userexists = await User.findOne({ where: {username: req.body.username, role: "technician"} }) ||
+				await User.findOne({ where: {username: req.body.username, role: "user"} });
   if (!userexists)
     return res.status(401).send('Username or password is wrong');
 
